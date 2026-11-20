@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodOrder | Online Food Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="#home" class="logo">🍕 Food<span>Order</span></a>
+
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <nav id="navLinks">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#restaurants" onclick="closeMenu()">Restaurants</a>
+        <a href="#menu" onclick="closeMenu()">Menu</a>
+        <a href="#orders" onclick="closeMenu()">My Orders</a>
+        <a href="#profile" onclick="closeMenu()">Profile</a>
+        <a href="#cart" class="cart-link" onclick="closeMenu()">🛒 Cart <span id="cartCount">0</span></a>
+        <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+    </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="tag">🍴 Delicious food, delivered fresh</span>
+        <h1>Hungry? Your Favourite Food Is Just A Click Away!</h1>
+        <p>Discover amazing restaurants and enjoy delicious meals delivered right to your doorstep.</p>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search restaurants or food...">
+            <button onclick="searchFood()">Search</button>
+        </div>
+
+        <div class="hero-stats">
+            <div><strong>50+</strong><small>Food Items</small></div>
+            <div><strong>20+</strong><small>Restaurants</small></div>
+            <div><strong>30 min</strong><small>Fast Delivery</small></div>
+        </div>
+    </div>
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800" alt="Delicious pizza">
+        <div class="floating-card">⭐ 4.9 Rating</div>
+    </div>
+</section>
+
+<section class="section" id="categories">
+    <div class="section-heading">
+        <span class="tag">Explore food</span>
+        <h2>Browse Categories</h2>
+        <p>Choose your favourite food category</p>
+    </div>
+    <div class="category-grid">
+        <button onclick="filterCategory('All')" class="category active">🍽️<span>All</span></button>
+        <button onclick="filterCategory('Pizza')" class="category">🍕<span>Pizza</span></button>
+        <button onclick="filterCategory('Burger')" class="category">🍔<span>Burgers</span></button>
+        <button onclick="filterCategory('Sushi')" class="category">🍣<span>Sushi</span></button>
+        <button onclick="filterCategory('Noodles')" class="category">🍜<span>Noodles</span></button>
+        <button onclick="filterCategory('Salad')" class="category">🥗<span>Salads</span></button>
+        <button onclick="filterCategory('Dessert')" class="category">🍰<span>Desserts</span></button>
+        <button onclick="filterCategory('Beverage')" class="category">🥤<span>Drinks</span></button>
+    </div>
+</section>
+
+<section class="section" id="restaurants">
+    <div class="section-heading">
+        <span class="tag">Popular places</span>
+        <h2>Featured Restaurants</h2>
+        <p>Discover the best restaurants around you</p>
+    </div>
+    <div class="restaurant-grid" id="restaurantGrid"></div>
+</section>
+
+<section class="section" id="menu">
+    <div class="section-heading">
+        <span class="tag">Fresh and tasty</span>
+        <h2>Our Delicious Menu</h2>
+        <p>Choose from our most popular dishes</p>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<section class="section cart-section" id="cart">
+    <div class="section-heading">
+        <span class="tag">Your selection</span>
+        <h2>Shopping Cart 🛒</h2>
+    </div>
+    <div class="cart-container">
+        <div id="cartItems"></div>
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <p>Subtotal <span id="subtotal">₹0</span></p>
+            <p>Delivery Fee <span id="delivery">₹0</span></p>
+            <p>Discount <span id="discount">₹0</span></p>
+            <div class="promo-box">
+                <input type="text" id="promoCode" placeholder="Promo code">
+                <button onclick="applyPromo()">Apply</button>
+            </div>
+            <h3 class="total">Total <span id="total">₹0</span></h3>
+            <button class="primary-btn full" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+</section>
+
+<section class="section checkout-section" id="checkout">
+    <div class="section-heading">
+        <span class="tag">Almost there!</span>
+        <h2>Secure Checkout</h2>
+    </div>
+    <form id="checkoutForm" class="checkout-form">
+        <h3>Delivery Information</h3>
+        <input type="text" id="customerName" placeholder="Full Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+        <textarea id="address" placeholder="Complete Delivery Address" required></textarea>
+        <input type="text" id="city" placeholder="City" required>
+
+        <h3>Payment Method</h3>
+        <select id="payment" required>
+            <option value="">Select Payment Method</option>
+            <option>UPI</option>
+            <option>Credit Card</option>
+            <option>Debit Card</option>
+            <option>Mobile Wallet</option>
+            <option>Cash on Delivery</option>
+        </select>
+
+        <div class="checkout-total">
+            Amount to Pay: <strong id="checkoutTotal">₹0</strong>
+        </div>
+        <button type="submit" class="primary-btn full">Place Order</button>
+    </form>
+</section>
+
+<section class="section" id="orders">
+    <div class="section-heading">
+        <span class="tag">Your purchases</span>
+        <h2>Order History 📦</h2>
+    </div>
+    <div id="orderList" class="order-list"></div>
+</section>
+
+<section class="section" id="dashboard">
+    <div class="section-heading">
+        <span class="tag">Restaurant management</span>
+        <h2>Restaurant Dashboard</h2>
+        <p>Manage menu items and monitor customer orders</p>
+    </div>
+    <div class="dashboard-grid">
+        <div class="dashboard-card">
+            <span>🍔</span>
+            <h3 id="dashItems">0</h3>
+            <p>Menu Items</p>
+        </div>
+        <div class="dashboard-card">
+            <span>📦</span>
+            <h3 id="dashOrders">0</h3>
+            <p>Total Orders</p>
+        </div>
+        <div class="dashboard-card">
+            <span>💰</span>
+            <h3 id="dashRevenue">₹0</h3>
+            <p>Total Revenue</p>
+        </div>
+    </div>
+
+    <form id="addItemForm" class="add-item-form">
+        <h3>Add New Menu Item</h3>
+        <input type="text" id="newItemName" placeholder="Food Name" required>
+        <input type="number" id="newItemPrice" placeholder="Price" min="1" required>
+        <select id="newItemCategory">
+            <option>Pizza</option>
+            <option>Burger</option>
+            <option>Sushi</option>
+            <option>Noodles</option>
+            <option>Salad</option>
+            <option>Dessert</option>
+            <option>Beverage</option>
+        </select>
+        <button class="primary-btn">Add Item</button>
+    </form>
+
+    <div id="dashboardOrders"></div>
+</section>
+
+<section class="section" id="profile">
+    <div class="section-heading">
+        <span class="tag">Your account</span>
+        <h2>Customer Profile 👤</h2>
+    </div>
+    <form class="profile-form" id="profileForm">
+        <input type="text" id="profileName" placeholder="Your Name">
+        <input type="email" id="profileEmail" placeholder="Email Address">
+        <input type="tel" id="profilePhone" placeholder="Phone Number">
+        <textarea id="profileAddress" placeholder="Saved Address"></textarea>
+        <button class="primary-btn">Save Profile</button>
+    </form>
+</section>
+
+<section class="section" id="auth">
+    <div class="section-heading">
+        <span class="tag">Welcome to FoodOrder</span>
+        <h2>Login / Register</h2>
+    </div>
+    <form id="authForm" class="profile-form">
+        <input type="text" id="authName" placeholder="Full Name" required>
+        <input type="email" id="authEmail" placeholder="Email Address" required>
+        <input type="password" id="authPassword" placeholder="Password (minimum 6 characters)" minlength="6" required>
+        <select id="authRole">
+            <option>Customer</option>
+            <option>Restaurant Owner</option>
+            <option>Admin</option>
+        </select>
+        <button class="primary-btn full">Register / Login</button>
+        <p id="authMessage"></p>
+    </form>
+</section>
+</main>
+
+<footer>
+    <div class="footer-logo">🍕 FoodOrder</div>
+    <p>Delicious food delivered with love ❤️</p>
+    <p>© 2026 FoodOrder. All Rights Reserved.</p>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
